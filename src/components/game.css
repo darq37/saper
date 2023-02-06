@@ -1,0 +1,20 @@
+.game-container {
+  outline: 1px solid #44b05d;
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+}
+.game-info {
+  height: 20%;
+  margin-bottom: 1em;
+  outline: 1px solid aquamarine;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.game-board {
+  width: 100%;
+  outline: 1px solid green;
+}
+

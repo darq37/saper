@@ -1,6 +1,6 @@
 import './game.css'
-import GameInfo from "../GameInfo/GameInfo";
-import GameBoard from "../GameBoard/GameBoard";
+import GameInfo from "./GameInfo";
+import GameBoard from "./GameBoard";
 
 const Game = () => {
   return <div className="game-container">

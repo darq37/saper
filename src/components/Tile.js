@@ -10,6 +10,7 @@ const Tile = ({ tileState, setTileState }) => {
 	} }
   >
 	{ tileState?.clicked ? tileState?.value : "" }
+	{ tileState?.bomb ? "*" : "" }
   </button>
 }
 export default Tile;

@@ -1,28 +1,19 @@
 import Tile from "./Tile";
+import { columns, rows, tileLength } from "./Game";
 
 
-const GameBoard = () => {
-  const rows = 20;
-  const columns = 30;
-  const tileLength= 25;
-  const getBoard = () => {
-	let board = new Array(10);
-	for (let i = 0; i < rows; i++) {
-	  board[i] = []; // Initialize inner array
-	  for (let j = 0; j < columns; j++) { // i++ needs to be j++
-		board[i][j] = j;
-	  }
-	}
-	return board
-  }
+const GameBoard = ({ board, setTileState }) => {
   
   return <div className="game-board" style={
 	{
-	  height: rows * tileLength,
+	  height: rows * tileLength + 20,
 	  width: columns * tileLength
 	}
-  }> {
-	getBoard().map(row => row.map(column => <Tile val={ column } tileLength={tileLength}/>))
-  }</div>
+  }>
+	{ board.map((row) => row.map((column) =>
+	  <Tile tileState={ column } setTileState={ setTileState }
+			key={ `${ column.row }${ column.column }` }/>))
+	}
+  </div>
 }
 export default GameBoard;

@@ -2,6 +2,7 @@
   outline: 1px solid #44b05d;
   display: flex;
   flex-direction: column;
+  flex-grow: initial;
   padding: 1em;
 }
 .game-info {

@@ -41,16 +41,22 @@ const Game = () => {
 	setBoard(() => getBoard());
   }
   const setTileState = (val) => {
+	console.log(val);
 	let copy = [...board];
 	copy[val.row][val.column] = val;
 	setBoard(copy);
-	console.log(val);
+  }
+  const setFlag = (tile) => {
+	setTileState({ ...tile, clicked: false, value: 0 });
+  }
+  const checkBomb = (tile) => {
+	setTileState({ ...tile, clicked: true, value: 1 });
   }
   
   return <div className="game-container">
 	
 	<GameInfo resetGame={ resetGame }/>
-	<GameBoard board={ board } setTileState={ setTileState }/>
+	<GameBoard board={ board } checkBomb={ checkBomb } setFlag={ setFlag }/>
   </div>
 }
 export default Game;

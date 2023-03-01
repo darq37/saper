@@ -1,12 +1,14 @@
 import { tileLength } from "./Game";
 
-const Tile = ({ tileState, setTileState }) => {
+const Tile = ({ tileState, checkBomb, setFlag }) => {
   return <button
 	style={ { height: tileLength, width: tileLength } }
-	onClick={ () => setTileState({ ...tileState, clicked: true, value: 1 }) }
+	onClick={ () => {
+	  checkBomb(tileState)
+	} }
 	onContextMenuCapture={ (e) => {
 	  e.preventDefault();
-	  return setTileState({ ...tileState, clicked: false, value: 0 });
+	  setFlag(tileState);
 	} }
   >
 	{ tileState?.clicked ? tileState?.value : "" }

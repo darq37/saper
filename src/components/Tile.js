@@ -11,8 +11,10 @@ const Tile = ({ tileState, checkBomb, setFlag }) => {
 	  setFlag(tileState);
 	} }
   >
-	{ tileState?.clicked ? tileState?.value : "" }
+	{ tileState?.flag ? "F" : "" }
+	{ tileState?.question ? "?" : "" }
 	{ tileState?.bomb ? "*" : "" }
+	{ tileState?.clicked ? tileState.adjBombs : "" }
   </button>
 }
 export default Tile;

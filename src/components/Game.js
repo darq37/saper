@@ -95,9 +95,14 @@ function getAdjacent(arr, i, j) {
 const Game = () => {
   const [board, setBoard] = useState(() => getBoard());
   const [flags, setFlags] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const [time, setTime] = useState(0);
   
   const resetGame = () => {
 	setBoard(() => getBoard());
+	setTime(0);
+	setPlaying(false);
+	setFlags(0);
   }
   const setTileState = (val) => {
 	console.log(val);
@@ -119,8 +124,9 @@ const Game = () => {
 	}
   }
   const checkBomb = (tile) => {
+	setPlaying(true);
 	if (tile.bomb) {
-	  alert("you lost!")
+	  alert("you lost!");
 	  resetGame();
 	}
 	let ans = getAdjacent(board, tile.row, tile.column);
@@ -134,7 +140,7 @@ const Game = () => {
   
   return <div className="game-container">
 	
-	<GameInfo resetGame={ resetGame } flagsAmount={ flags }/>
+	<GameInfo resetGame={ resetGame } flagsAmount={ flags } playing={ playing } setTime={ setTime } time={ time }/>
 	<GameBoard board={ board } checkBomb={ checkBomb } setFlag={ setFlag }/>
   </div>
 }

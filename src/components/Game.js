@@ -19,7 +19,6 @@ const placeBombs = (board) => {
   while (bombs !== 0) {
 	const randomRow = getRandomInt(rows);
 	const randomColumn = getRandomInt(columns);
-	console.log(`Bomb should be at [${ randomRow }][${ randomColumn }]`)
 	board[randomRow][randomColumn].bomb = true;
 	bombs--;
   }
@@ -37,7 +36,8 @@ const getBoard = () => {
 		adjBombs: 0,
 		column: column,
 		bomb: false,
-		question: false
+		question: false,
+		gameOver: false
 	  };
 	}
   }
@@ -96,6 +96,7 @@ const Game = () => {
   const [board, setBoard] = useState(() => getBoard());
   const [flags, setFlags] = useState(0);
   const [playing, setPlaying] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
   const [time, setTime] = useState(0);
   
   const resetGame = () => {
@@ -103,9 +104,9 @@ const Game = () => {
 	setTime(0);
 	setPlaying(false);
 	setFlags(0);
+	setGameOver(false);
   }
   const setTileState = (val) => {
-	console.log(val);
 	let copy = [...board];
 	copy[val.row][val.column] = val;
 	setBoard(copy);
@@ -126,8 +127,8 @@ const Game = () => {
   const checkBomb = (tile) => {
 	setPlaying(true);
 	if (tile.bomb) {
-	  alert("you lost!");
-	  resetGame();
+	  setGameOver(true);
+	  return;
 	}
 	let ans = getAdjacent(board, tile.row, tile.column);
 	const sum = ans.reduce(
@@ -140,8 +141,9 @@ const Game = () => {
   
   return <div className="game-container">
 	
-	<GameInfo resetGame={ resetGame } flagsAmount={ flags } playing={ playing } setTime={ setTime } time={ time }/>
-	<GameBoard board={ board } checkBomb={ checkBomb } setFlag={ setFlag }/>
+	<GameInfo resetGame={ resetGame } flagsAmount={ flags } playing={ playing } setTime={ setTime } time={ time }
+			  gameOver={ gameOver }/>
+	<GameBoard board={ board } checkBomb={ checkBomb } setFlag={ setFlag } gameOver={ gameOver }/>
   </div>
 }
 export default Game;

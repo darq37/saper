@@ -1,6 +1,6 @@
 import { tileLength } from "./Game";
 
-const Tile = ({ tileState, checkBomb, setFlag }) => {
+const Tile = ({ tileState, checkBomb, setFlag, gameOver }) => {
   return <button
 	style={ { height: tileLength, width: tileLength } }
 	onClick={ () => {
@@ -13,7 +13,7 @@ const Tile = ({ tileState, checkBomb, setFlag }) => {
   >
 	{ tileState?.flag ? "F" : "" }
 	{ tileState?.question ? "?" : "" }
-	{ tileState?.bomb ? "*" : "" }
+	{ gameOver && tileState?.bomb ? "*" : "" }
 	{ tileState?.clicked ? tileState.adjBombs : "" }
   </button>
 }

@@ -98,6 +98,11 @@ const Game = () => {
   const [playing, setPlaying] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [time, setTime] = useState(0);
+  const [isMouseDown, setIsMouseDown] = useState(false);
+  
+  const onMouseDown = (value) => {
+	setIsMouseDown(value);
+  }
   
   const resetGame = () => {
 	setBoard(() => getBoard());
@@ -142,8 +147,8 @@ const Game = () => {
   return <div className="game-container">
 	
 	<GameInfo resetGame={ resetGame } flagsAmount={ flags } playing={ playing } setTime={ setTime } time={ time }
-			  gameOver={ gameOver }/>
-	<GameBoard board={ board } checkBomb={ checkBomb } setFlag={ setFlag } gameOver={ gameOver }/>
+			  gameOver={ gameOver } isMouseDown={ isMouseDown}/>
+	<GameBoard board={ board } checkBomb={ checkBomb } setFlag={ setFlag } gameOver={ gameOver } onMouseDown={onMouseDown}/>
   </div>
 }
 export default Game;

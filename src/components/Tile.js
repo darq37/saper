@@ -1,6 +1,6 @@
 import { tileLength } from "./Game";
 
-const Tile = ({ tileState, checkBomb, setFlag, gameOver }) => {
+const Tile = ({ tileState, checkBomb, setFlag, gameOver, onMouseDown }) => {
   return <button
 	style={ { height: tileLength, width: tileLength } }
 	onClick={ () => {
@@ -10,6 +10,9 @@ const Tile = ({ tileState, checkBomb, setFlag, gameOver }) => {
 	  e.preventDefault();
 	  setFlag(tileState);
 	} }
+	onMouseDown={() => onMouseDown(true)}
+	onMouseOut={() => onMouseDown(false)}
+	onMouseUp={() => onMouseDown(false)}
   >
 	{ tileState?.flag ? "F" : "" }
 	{ tileState?.question ? "?" : "" }

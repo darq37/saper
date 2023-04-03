@@ -1,11 +1,11 @@
 import BombCounter from "./BombCounter";
 import Timer from "./Timer";
 
-const GameInfo = ({resetGame}) => {
+const GameInfo = ({ resetGame, flagsAmount }) => {
   return (
 	<div className="game-info">
-	  <BombCounter/>
-	  <button onClick={resetGame}>:)</button>
+	  <BombCounter flagsAmount={ flagsAmount }/>
+	  <button onClick={ resetGame }>:)</button>
 	  <Timer/>
 	</div>
   );

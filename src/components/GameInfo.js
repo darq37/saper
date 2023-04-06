@@ -1,9 +1,9 @@
 import BombCounter from "./BombCounter";
 import Timer from "./Timer";
 
-const GameInfo = ({ resetGame, flagsAmount, playing, setTime, time, gameOver, isMouseDown }) => {
+const GameInfo = ({ resetGame, flagsAmount, playing, setTime, time, gameOver, isMouseDown, bombsAmount }) => {
   const getButtonText = () => {
-	if (gameOver){
+	if (gameOver) {
 	  return ":("
 	}
 	if (isMouseDown) {
@@ -13,9 +13,9 @@ const GameInfo = ({ resetGame, flagsAmount, playing, setTime, time, gameOver, is
   }
   return (
 	<div className="game-info">
-	  <BombCounter flagsAmount={ flagsAmount }/>
-	  <button onClick={ resetGame }>{getButtonText()}</button>
-	  <Timer playing={ playing } time={ time } setTime={ setTime } gameOver={gameOver}/>
+	  <BombCounter flagsAmount={ flagsAmount } bombsAmount={ bombsAmount }/>
+	  <button onClick={ resetGame }>{ getButtonText() }</button>
+	  <Timer playing={ playing } time={ time } setTime={ setTime } gameOver={ gameOver }/>
 	</div>
   );
 }

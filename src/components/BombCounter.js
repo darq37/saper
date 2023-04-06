@@ -1,6 +1,5 @@
-import { BOMBS_AMOUNT } from "./Game";
 
-const BombCounter = ({flagsAmount}) => {
-  return <>{BOMBS_AMOUNT - flagsAmount}</>
+const BombCounter = ({bombsAmount, flagsAmount}) => {
+  return <>{bombsAmount - flagsAmount}</>
 }
 export default BombCounter;

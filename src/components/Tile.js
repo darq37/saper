@@ -1,8 +1,7 @@
-import { tileLength } from "./Game";
+import "./tile.css";
 
 const Tile = ({ tileState, checkBomb, setFlag, gameOver, onMouseDown }) => {
-  return <button
-	style={ { height: tileLength, width: tileLength } }
+  return <div
 	onClick={ () => {
 	  checkBomb(tileState)
 	} }
@@ -13,11 +12,13 @@ const Tile = ({ tileState, checkBomb, setFlag, gameOver, onMouseDown }) => {
 	onMouseDown={() => onMouseDown(true)}
 	onMouseOut={() => onMouseDown(false)}
 	onMouseUp={() => onMouseDown(false)}
+	className="tile"
   >
 	{ tileState?.flag ? "F" : "" }
 	{ tileState?.question ? "?" : "" }
 	{ gameOver && tileState?.bomb ? "*" : "" }
+	{/*{ tileState?.bomb ? "*" : tileState.adjBombs }*/}
 	{ tileState?.clicked ? tileState.adjBombs : "" }
-  </button>
+  </div>
 }
 export default Tile;

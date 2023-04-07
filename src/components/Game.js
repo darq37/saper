@@ -2,19 +2,15 @@ import './game.css'
 import GameInfo from "./GameInfo";
 import GameBoard from "./GameBoard";
 import { useCallback, useEffect, useState } from "react";
-import { getAdjacent, getBoard } from "../utils";
+import { getBoard, getPositions, validCoordinates } from "../utils";
 
-const Game = ({ level }) => {
+const Game = ({level}) => {
   const [board, setBoard] = useState([]);
   const [flags, setFlags] = useState(0);
   const [playing, setPlaying] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   const [time, setTime] = useState(0);
   const [isMouseDown, setIsMouseDown] = useState(false);
-  
-
-  
-  
   const onMouseDown = (value) => {
 	setIsMouseDown(value);
   }
@@ -39,6 +35,7 @@ const Game = ({ level }) => {
 	setBoard(copy);
   }
   const setFlag = (tile) => {
+	if (tile.clicked) return;
 	if (!tile.flag && !tile.question) {
 	  setTileState({ ...tile, flag: true });
 	  setFlags(prevState => prevState + 1);
@@ -52,18 +49,42 @@ const Game = ({ level }) => {
 	}
   }
   const checkBomb = (tile) => {
+	if (gameOver) return;
 	setPlaying(true);
 	if (tile.bomb) {
 	  setGameOver(true);
 	  return;
 	}
-	let adjacent = getAdjacent(board, tile.row, tile.column);
-	const sum = adjacent.reduce(
-	  (accumulator, currentValue) => accumulator + currentValue.bomb,
-	  0,
-	);
-	
-	setTileState({ ...tile, clicked: true, adjBombs: sum });
+	const fillStack = [];
+	function fillAdjacentEmptyCells(matrix, row, col) {
+	  fillStack.push([row, col]);
+	  
+	  while(fillStack.length > 0)
+	  {
+		const [row, col] = fillStack.pop();
+		
+		if (!validCoordinates(matrix, row, col))
+		  continue;
+		
+		if (matrix[row][col]?.bomb) {
+		  continue;
+		}
+		
+		if (matrix[row][col]?.adjBombs !==0  || matrix[row][col].clicked) {
+		  matrix[row][col].clicked = true;
+		  continue;
+		}
+		
+		matrix[row][col].clicked = true;
+		
+		const positions = getPositions(row , col);
+		positions.forEach(({ x, y }) => {
+		  fillStack.push([x,y]);
+		})
+	  }
+	}
+	fillAdjacentEmptyCells(board, tile.row, tile.column);
+	setTileState({ ...tile, clicked: true });
   }
   
   return <div className="game-container">

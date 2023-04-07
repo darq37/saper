@@ -20,7 +20,7 @@ function App() {
 		</select>
 	  </div>
 	  
-	  <Game level={ level || DIFFICULTY_LEVEL.BEGINNER }/>
+	  <Game level={ level }/>
 	</div>
   );
 }

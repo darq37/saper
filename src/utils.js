@@ -7,6 +7,13 @@ export const DIFFICULTY_LEVEL = {
   INTERMEDIATE: { size: 16, bombs: 40, name: 'INTERMEDIATE' },
   ADVANCED: { size: 24, bombs: 99, name: 'ADVANCED' },
 }
+
+export const getPositions = (i ,j) =>
+  [
+	{ x: i - 1, y: j - 1 }, { x: i - 1, y: j }, { x: i - 1, y: j + 1 },
+	{ x: i, y: j - 1 }, { x: i, y: j + 1 },
+	{ x: i + 1, y: j - 1 }, { x: i + 1, y: j }, { x: i + 1, y: j + 1 },
+  ]
 const placeBombs = (board, bombsAmount) => {
   let bombs = bombsAmount;
   while (bombs !== 0) {
@@ -38,20 +45,18 @@ export const getBoard = (level) => {
   return fillAdjacent(bombed);
 }
 
-function isValidPos(row, column, arr) {
-  if (row < 0 || column < 0 || row > arr.length - 1 || column > arr.length - 1) {
-	return 0;
-  }
-  return 1;
+export function isValidPos(row, column, arr) {
+  return !(row < 0 || column < 0 || row > arr.length - 1 || column > arr.length - 1);
+  
 }
+export function validCoordinates(matrix, row, col) {
+  return (row >= 0 && row < matrix.length && col >= 0 && col < matrix[row].length);
+}
+
 
 export function getAdjacent(arr, i, j) {
   let adjacentValidPositions = [];
-  const positions = [
-	{ x: i - 1, y: j - 1 }, { x: i - 1, y: j }, { x: i - 1, y: j + 1 },
-	{ x: i, y: j - 1 }, { x: i, y: j + 1 },
-	{ x: i + 1, y: j - 1 }, { x: i + 1, y: j }, { x: i + 1, y: j + 1 },
-  ];
+  const positions = getPositions(i , j);
   positions.forEach(({ x, y }) => {
 	if (isValidPos(x, y, arr)) {
 	  adjacentValidPositions.push(arr[x][y])
@@ -78,3 +83,5 @@ function fillAdjacent(board) {
   }
   return prepared;
 }
+
+

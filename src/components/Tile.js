@@ -17,7 +17,6 @@ const Tile = ({ tileState, checkBomb, setFlag, gameOver, onMouseDown }) => {
 	{ tileState?.flag ? "F" : "" }
 	{ tileState?.question ? "?" : "" }
 	{ gameOver && tileState?.bomb ? "*" : "" }
-	{/*{ tileState?.bomb ? "*" : tileState.adjBombs }*/}
 	{ tileState?.clicked ? tileState.adjBombs : "" }
   </div>
 }

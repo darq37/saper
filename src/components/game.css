@@ -17,4 +17,7 @@
 .game-board {
   outline: 1px solid green;
 }
+.board-row {
+  max-height: 22px;
+}
 

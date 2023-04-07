@@ -1,8 +1,13 @@
 .tile {
-  outline: 0.5px solid black;
   display: inline-block;
   text-align: center;
   height: 22px;
   width: 22px;
   overflow: hidden;
+  border: 0.5px solid black;
+  border-radius: 1px;
+}
+.tile-clicked {
+  background-color: lightgray;
+  box-shadow: inset 0 0 2px black, 0 0 1px black;
 }

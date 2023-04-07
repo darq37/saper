@@ -4,7 +4,7 @@ import GameBoard from "./GameBoard";
 import { useCallback, useEffect, useState } from "react";
 import { getBoard, getPositions, validCoordinates } from "../utils";
 
-const Game = ({level}) => {
+const Game = ({ level }) => {
   const [board, setBoard] = useState([]);
   const [flags, setFlags] = useState(0);
   const [playing, setPlaying] = useState(false);
@@ -32,11 +32,11 @@ const Game = ({level}) => {
   const isWin = board.every((row) => row.every((column) => column.clicked || column.bomb))
   
   useEffect(() => {
-	if (isWin){
-	  alert('WIN');
+	if (isWin && playing) {
+	  alert("WIN!!")
 	  resetGame();
 	}
-  }, [isWin, resetGame]);
+  }, [isWin, playing, resetGame])
   
   
   const setTileState = (val) => {
@@ -45,7 +45,9 @@ const Game = ({level}) => {
 	setBoard(copy);
   }
   const setFlag = (tile) => {
-	if (tile.clicked) return;
+	if (tile.clicked) {
+	  return;
+	}
 	if (!tile.flag && !tile.question) {
 	  setTileState({ ...tile, flag: true });
 	  setFlags(prevState => prevState + 1);
@@ -59,48 +61,57 @@ const Game = ({level}) => {
 	}
   }
   const checkBomb = (tile) => {
-	if (gameOver) return;
+	if (gameOver) {
+	  return;
+	}
 	setPlaying(true);
 	if (tile.bomb) {
+	  setTileState({ ...tile, clicked: true, flag: false, question: false });
 	  setGameOver(true);
 	  return;
 	}
-
+	
 	const fillStack = [];
+	
 	function fillAdjacentEmptyCells(matrix, row, col) {
 	  fillStack.push([row, col]);
 	  
-	  while(fillStack.length > 0)
-	  {
+	  while (fillStack.length > 0) {
 		const [row, col] = fillStack.pop();
 		
-		if (!validCoordinates(matrix, row, col))
+		if (!validCoordinates(matrix, row, col)) {
 		  continue;
+		}
 		
 		if (matrix[row][col]?.bomb) {
 		  continue;
 		}
 		
-		if (matrix[row][col]?.adjBombs !==0  || matrix[row][col].clicked) {
+		if (matrix[row][col]?.adjBombs !== 0 || matrix[row][col].clicked) {
 		  matrix[row][col].clicked = true;
+		  matrix[row][col].flag = false;
+		  matrix[row][col].question = false;
 		  continue;
 		}
 		
 		matrix[row][col].clicked = true;
+		matrix[row][col].flag = false;
+		matrix[row][col].question = false;
 		
-		const positions = getPositions(row , col);
+		const positions = getPositions(row, col);
 		positions.forEach(({ x, y }) => {
-		  fillStack.push([x,y]);
+		  fillStack.push([x, y]);
 		})
 	  }
 	}
+	
 	fillAdjacentEmptyCells(board, tile.row, tile.column);
-	setTileState({ ...tile, clicked: true });
+	setTileState({ ...tile, clicked: true, flag: false, question: false });
   }
   
   return <div className="game-container">
 	<GameInfo resetGame={ resetGame } flagsAmount={ flags } playing={ playing } setTime={ setTime } time={ time }
-			  gameOver={ gameOver } isMouseDown={ isMouseDown } bombsAmount={level.bombs}/>
+			  gameOver={ gameOver } isMouseDown={ isMouseDown } bombsAmount={ level.bombs }/>
 	<GameBoard board={ board } checkBomb={ checkBomb } setFlag={ setFlag } gameOver={ gameOver }
 			   onMouseDown={ onMouseDown }/>
   </div>

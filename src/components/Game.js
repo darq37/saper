@@ -29,6 +29,16 @@ const Game = ({level}) => {
 	resetGame();
   }, [level.size, resetGame]);
   
+  const isWin = board.every((row) => row.every((column) => column.clicked || column.bomb))
+  
+  useEffect(() => {
+	if (isWin){
+	  alert('WIN');
+	  resetGame();
+	}
+  }, [isWin, resetGame]);
+  
+  
   const setTileState = (val) => {
 	let copy = [...board];
 	copy[val.row][val.column] = val;
@@ -55,6 +65,7 @@ const Game = ({level}) => {
 	  setGameOver(true);
 	  return;
 	}
+
 	const fillStack = [];
 	function fillAdjacentEmptyCells(matrix, row, col) {
 	  fillStack.push([row, col]);

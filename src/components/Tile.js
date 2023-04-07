@@ -2,20 +2,23 @@ import "./tile.css";
 
 const Tile = ({ tileState, checkBomb, setFlag, gameOver, onMouseDown }) => {
   const getTileStyle = () => {
+	if (tileState.bomb) {
+	  return
+	}
 	switch (tileState.adjBombs) {
 	  case 1:
 		return { color: "blue" };
 	  case 2:
 		return { color: "green" };
-		case 3:
+	  case 3:
 		return { color: "red" };
-		case 4:
+	  case 4:
 		return { color: "purple" };
-		case 5:
+	  case 5:
 		return { color: "black" };
-		case 6:
+	  case 6:
 		return { color: "gray" };
-		case 7:
+	  case 7:
 		return { color: "maroon" };
 	  default:
 		return { color: "black" };
@@ -37,7 +40,7 @@ const Tile = ({ tileState, checkBomb, setFlag, gameOver, onMouseDown }) => {
 	style={ getTileStyle() }
 	data-color={ tileState.adjBombs }
   >
-	{ tileState?.flag ? "F" : "" }
+	{ !gameOver && tileState?.flag ? "F" : "" }
 	{ tileState?.question ? "?" : "" }
 	{ gameOver && tileState?.bomb ? "*" : "" }
 	{ tileState?.clicked ? tileState.adjBombs : "" }
